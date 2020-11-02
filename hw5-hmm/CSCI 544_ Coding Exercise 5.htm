@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0053)http://ron.artstein.org/csci544-2020-08/coding-5.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<link rel="stylesheet" type="text/css" href="./CSCI 544_ Coding Exercise 5_files/csci544.css">
+<title>CSCI 544: Coding Exercise 5</title>
+</head>
+
+<body style="">
+
+<div style="background-color:#900 ; text-align: right ; margin:0px">
+  <a href="http://www.usc.edu/">
+  <img style="padding:11px" src="./CSCI 544_ Coding Exercise 5_files/usc-shield-name-white.png" alt="University of Southern California"></a>
+</div>
+
+<h1>CSCI 544&nbsp;— Applied Natural Language Processing</h1>
+
+<hr>
+<h2>Coding Exercise 5</h2>
+<h2>Due: October&nbsp;26, 2020, at 23:59 Pacific Time (11:59 PM)</h2>
+<p>This assignment counts for 10% of the course grade.
+</p><p>Assignments turned in after the deadline but before
+October&nbsp;29 are subject to a 20% grade penalty.
+
+</p><hr>
+
+<h2>Overview</h2>
+
+<p>In this assignment you will write a Hidden Markov Model
+part-of-speech tagger for Italian, Japanese, and a surprise language.
+The training data are provided
+tokenized and tagged; the test data will be provided tokenized, and
+your tagger will add the tags.
+The assignment will be graded based on the performance of your tagger,
+that is how well it performs on unseen test data compared to the
+performance of a reference tagger.
+
+</p><h2>Data</h2>
+
+<p>A set of training and development data is available as a
+compressed ZIP archive on <a href="http://blackboard.usc.edu/">Blackboard</a>.
+The uncompressed archive will have the following files:
+</p><ul>
+  <li>Two files (one Italian, one Japanese) with tagged training data
+  in the word/TAG format, with words separated by spaces and each
+  sentence on a new line.
+  </li><li>Two files (one Italian, one Japanese) with untagged development
+  data, with words separated by spaces and each sentence on a new line.
+  </li><li>Two files (one Italian, one Japanese) with tagged development
+  data in the word/TAG format, with words separated by spaces and each
+  sentence on a new line, to serve as an answer key.
+  </li><li>A readme/license file (which you won’t need for the exercise).
+</li></ul>
+
+<p>The grading script will train your model on all of the tagged training
+and development data (separately for Italian and Japanese), and test
+the model on unseen data in a similar format. The grading script will
+do the same for the surprise language, for which all of the training,
+development and test data are unseen.
+
+</p><h2>Programs</h2>
+
+<p>You will write two programs in <strong>Python&nbsp;3</strong>
+(Python&nbsp;2 has been deprecated):
+<code>hmmlearn.py</code> will learn a hidden Markov model from the
+training data, and
+<code>hmmdecode.py</code> will use the model to tag new data.
+
+</p><p>The learning program will be invoked in the following way:
+
+</p><p><code>&gt; python hmmlearn.py /path/to/input</code>
+
+</p><p>The argument is a single file containing the training data; the program
+will learn a hidden Markov model, and write the model parameters to a
+file called <code>hmmmodel.txt</code>. The format of the model is up to
+you, but it should follow the following guidelines:
+</p><ol>
+  <li> The model file should contain sufficient information for
+  <code>hmmdecode.py</code> to successfully tag new data.
+  </li><li> The model file should be human-readable, so that model
+  parameters can be easily understood by visual inspection of the
+  file.
+</li></ol>
+
+<p>The tagging program will be invoked in the following way:
+
+</p><p><code>&gt; python hmmdecode.py /path/to/input</code>
+
+</p><p>The argument is a single file containing the test data; the program
+will read the parameters of a hidden Markov model from the file
+<code>hmmmodel.txt</code>, tag each word in the test data, and
+write the results to a text file called <code>hmmoutput.txt</code> in
+the same format as the training data.
+
+</p><p>The accuracy of your tagger is determined by a scoring script which
+compares the output of your tagger to a reference tagged text. Note
+that the tagged output file <code>hmmoutput.txt</code> must match line
+for line and word for word with the input to <code>hmmdecode.py</code>.
+A discrepancy in the number of lines or in the number of words on
+corresponding lines could cause the scoring script to fail.
+
+</p><h2>Submission</h2>
+
+<p>All submissions will be completed through
+<a href="https://labs.vocareum.com/main/main.php">Vocareum</a>;
+please consult the <a href="http://ron.artstein.org/csci544-2020-08/Student-Help-Vocareum.pdf">instructions
+for how to use Vocareum</a>.
+
+</p><p>Multiple submissions are allowed; only the final submission will be
+graded. Each time you submit, a submission script trains your model
+(separately for each language) on the training data, runs your tagger
+on the development data, and reports the results.
+Do not include the data in your submission: the submission script
+reads the data from a central directory, not from your
+personal directory. You are encouraged to <strong>submit early and
+often</strong> in order to iron out any problems, especially issues
+with the format of the final output.
+
+</p><p><span style="color:red">The accuracy of you tagger will be
+measured automatically; failure to format your output correctly may
+result in very low scores, which will not be changed.</span>
+
+</p><p>For full credit, make sure to submit your assignment well before
+the deadline. The time of submission recorded by the system is the
+time used for determining late penalties. If your submission is
+received late, whatever the reason (including equipment failure and
+network latencies or outages), it will incur a late penalty.
+
+</p><p>If you have any issues with Vocareum with regards to logging in,
+submission, code not executing properly, etc.,
+please <strong>post it on Piazza</strong> (as a private question if
+necessary) and we will look into it.
+
+</p><h2>Grading</h2>
+
+<p>After the due date, we will train your model (separately for each
+language) on a combination of the training and development data, run
+your tagger on new (unseen) test data, and 
+compute the accuracy of your output compared to a reference annotation.
+Your grade will be the accuracy of your tagger, scaled
+to the performance of a reference HMM tagger developed by us.
+Since part-of-speech tagging can achieve high accuracy by using a
+baseline tagger that just gives the most common tag for each word, only
+the performance above the baseline will be scaled:
+</p><ul>
+  <li>If your accuracy&nbsp;&lt;= baseline accuracy, your grade is
+  your accuracy.
+  </li><li>If baseline accuracy&nbsp;&lt; your accuracy&nbsp;&lt; reference
+  accuracy, your grade is baseline&nbsp;+
+  (1&nbsp;– baseline)&nbsp;×
+  (yours&nbsp;– baseline)&nbsp;/
+  (reference&nbsp;– baseline). 
+  </li><li>If reference accuracy&nbsp;&lt;= your accuracy, your grade
+  is&nbsp;100. 
+</li></ul>
+<p>For example, if the baseline is 90%, the reference in 95%, and your
+accuracy is 93%, then your grade will be 0.9&nbsp;+ 0.1&nbsp;×
+0.03&nbsp;/ 0.05&nbsp;= 96%. 
+
+</p><p>Each language (Italian, Japanese, and the surprise language) is worth
+one-third of the overall grade for this assignment.
+
+</p><h2>Notes</h2>
+
+<ul>
+  <li><strong>Tags.</strong> Each language has a different tagset; the
+  surprise language will have some tags that do not exist in the
+  Italian and Japanese data. You must therefore build your tag sets
+  from the training data, and not rely on a precompiled list of tags.
+  </li><li><strong>Slash character.</strong> The slash character
+  ‘/’ is the separator between words and tags, but it also
+  appears within words in the text, so be very careful when separating
+  words from tags. Slashes never appear in the tags, so the separator
+  is always the last slash in the word/tag sequence.
+  </li><li><strong>Smoothing and unseen words and transitions.</strong> You 
+  should implement some method to handle unknown vocabulary and unseen
+  transitions in the test data, otherwise your
+  programs won’t work.
+  <ul>
+    <li><strong>Unseen words:</strong> The test data may contain words
+    that have never been encountered in the training data: these will
+    have an emission probability of zero for all tags.
+    </li><li><strong>Unseen transitions:</strong>
+    The test data may contain two adjacent unambiguous
+    words (that is, words that can only have one part-of-speech tag),
+    but the transition between these tags was never seen in the training
+    data, so it has a probability of zero; in this case the Viterbi
+    algorithm will have no way to proceed.
+  </li></ul>
+  The reference solution will use add-one smoothing on the transition
+  probabilities and no smoothing on the emission probabilities; for
+  unknown tokens in the test data it will ignore the emission
+  probabilities and use the transition
+  probabilities alone. You may use more sophisticated methods
+  which you implement yourselves.
+  </li><li><strong>End state.</strong> You may choose to implement the
+  algorithm with transitions ending at the last word of a sentence (as
+  in the written homework assignment or in
+  <a href="https://web.stanford.edu/~jurafsky/slp3/8.pdf">Jurafsky and
+  Martin, figure 8.5</a>), or by adding a special end state after the
+  last word (see for example
+  <a href="https://web.archive.org/web/20180219142952/https://web.stanford.edu/~jurafsky/slp3/9.pdf">an
+  older draft of Jurafsky and Martin, figure 9.11</a>).
+  The reference solution will use an end state.
+  </li><li><strong>Runtime efficiency.</strong> Vocareum imposes a 
+  limit on running times, and if a program takes too long, Vocareum
+  will kill the process. Your program therefore needs to run
+  efficiently. One common source of runtime inefficiency in Viterbi
+  decoding is multiplying a lot of incoming transitions by an emission
+  probability of zero; testing for that zero and skipping all that
+  multiplication can cut the runtime by 90%.
+  Run times for the reference solution are approximately
+  1&nbsp;second for running <code>hmmlearn.py</code> on the training
+  data and 3&nbsp;seconds for running <code>hmmdecode.py</code> on
+  the development data, running on a MacBook Pro from 2016.
+</li></ul>
+  
+<h2>Collaboration and external resources</h2>
+
+<ul>
+  <li>This is an individual assignment. You may not work in teams or
+  collaborate with other students. You must be the sole author of 100%
+  of the code you turn in.
+  </li><li>You may not look for solutions on the web, or use code you find
+  online or anywhere else.
+  </li><li>You may not download the data from any source other than the
+  files provided on Blackboard, and you may not attempt to locate the
+  test data on the web or anywhere else.
+  </li><li>You may use packages in the Python Standard Library, as well as numpy. You may not
+  use any other packages.
+  </li><li>You may use external resources to learn basic functions of
+  Python (such as reading and writing files, handling text strings, and
+  basic math), but the extraction and computation of model parameters,
+  as well as the use of these parameters for tagging, must be
+  your own work.
+  </li><li>Failure to follow the above rules is considered a violation of
+  <a href="http://ron.artstein.org/csci544-2020-08/integrity.html">academic integrity</a>,
+  and is grounds for failure of the assignment, or
+  in serious cases failure of the course.
+  </li><li>We use plagiarism detection software to identify
+  similarities between student assignments, and between student
+  assignments and known solutions on the web.
+  <strong>Any attempt to fool plagiarism detection, for
+  example the modification of code to reduce its similarity to the
+  source, will result in an automatic failing grade for the
+  course.</strong>
+  </li><li>Please discuss any issues you have on the Piazza discussion
+  boards. Do not ask questions about the assignment by email; if we
+  receive questions by email where the response could be helpful for
+  the class, we will ask you to repost the question on the discussion
+  boards.
+</li></ul>
+
+
+
+</body></html>

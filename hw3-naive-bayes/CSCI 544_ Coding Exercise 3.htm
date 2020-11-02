@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0053)http://ron.artstein.org/csci544-2020-08/coding-3.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<link rel="stylesheet" type="text/css" href="./CSCI 544_ Coding Exercise 3_files/csci544.css">
+<title>CSCI 544: Coding Exercise 3</title>
+</head>
+
+<body style="">
+
+<div style="background-color:#900 ; text-align: right ; margin:0px">
+  <a href="http://www.usc.edu/">
+  <img style="padding:11px" src="./CSCI 544_ Coding Exercise 3_files/usc-shield-name-white.png" alt="University of Southern California"></a>
+</div>
+
+<h1>CSCI 544&nbsp;— Applied Natural Language Processing</h1>
+
+<hr>
+<h2>Coding Exercise 3</h2>
+<h2>Due: September&nbsp;28, 2020, at 23:59 Pacific Time (11:59 PM)</h2>
+<p>This assignment counts for 10% of the course grade.
+</p><p>Assignments turned in after the deadline but before
+October&nbsp;1 are subject to a 20% grade penalty.
+
+</p><hr>
+
+<h2>Overview</h2>
+
+<p>In this assignment you will write a naive Bayes classifier to
+identify hotel reviews as either truthful or deceptive, and either
+positive or negative. You will be using the word tokens as features
+for classification.
+The assignment will be graded based on the performance of your
+classifiers, that is how well they perform on unseen test data
+compared to the performance of a reference classifier.
+
+</p><h2>Data</h2>
+
+<p>A set of training and development data is available as a
+compressed ZIP archive on <a href="http://blackboard.usc.edu/">Blackboard</a>.
+The uncompressed archive contains the following files:
+</p><ul>
+  <li>A top-level directory with two sub-directories, one for positive
+  reviews and another for negative reviews (plus license and readme
+  files which you won’t need for the exercise).
+  </li><li>Each of the subdirectories contains two sub-directories, one
+  with truthful reviews and one with deceptive reviews.
+  </li><li>Each of these subdirectories contains four subdirectories,
+  called “folds”.
+  </li><li>Each of the folds contains 80 text files with English text (one
+  review per file).
+</li></ul>
+
+<p>The submission script will train your model on part of the training
+data, and report results on the remainder of the training data
+(reserved as development data; see below).
+The grading script will train your model on all of the training
+data, and test the model on unseen data in a similar format. The
+directory structure and file names of the test data will be masked so
+that they do not reveal the labels of the individual test files.
+
+</p><h2>Programs</h2>
+
+<p>You will write two programs in <strong>Python&nbsp;3</strong>
+(Python&nbsp;2 has been deprecated):
+<code>nblearn.py</code> will learn a naive Bayes model from the
+training data, and
+<code>nbclassify.py</code> will use the model to classify new data.
+
+</p><p>The learning program will be invoked in the following way:
+
+</p><p><code>&gt; python nblearn.py /path/to/input</code>
+
+</p><p>The argument is the directory of the training data; the program
+will learn a naive Bayes model, and write the model parameters to a
+file called <code>nbmodel.txt</code>. The format of the model is up to
+you, but it should follow the following guidelines:
+</p><ol>
+  <li> The model file should contain sufficient information for
+  <code>nbclassify.py</code> to successfully label new data.
+  </li><li> The model file should be human-readable, so that model
+  parameters can be easily understood by visual inspection of the
+  file.
+</li></ol>
+
+<p>The classification program will be invoked in the following way:
+
+</p><p><code>&gt; python nbclassify.py /path/to/input</code>
+
+</p><p>The argument is the directory of the test data; the program
+will read the parameters of a naive Bayes model from the file
+<code>nbmodel.txt</code>, classify each file in the test data, and
+write the results to a text file called <code>nboutput.txt</code> in
+the following format:
+
+</p><p><code>label_a label_b path1<br>label_a label_b path2</code>
+<br>&#8942;</p>
+
+<p>In the above format, <code>label_a</code> is either
+“truthful” or “deceptive”,
+<code>label_b</code> is either “positive” or
+“negative”, and <code>path<i>n</i></code> is the path of
+the text file being classified.
+
+</p><p>Note that in the training data, it is trivial to infer the labels from
+the directory names in the path. However, directory names in the
+development and test data on Vocareum will be masked, so the labels
+cannot be inferred this way.
+
+</p><h2>Submission</h2>
+
+<p>All submissions will be completed through
+<a href="https://labs.vocareum.com/main/main.php">Vocareum</a>;
+please consult the <a href="http://ron.artstein.org/csci544-2020-08/Student-Help-Vocareum.pdf">instructions
+for how to use Vocareum</a>.
+
+</p><p>Multiple submissions are allowed; only the final submission will be
+graded. Each time you submit, a submission script is invoked. The
+submission script uses a specific portion of the training data
+as development data; it trains your model on the remaining training
+data, runs your classifier on the development data, and reports the results.
+Do not include the data in your submission: the submission script
+reads the data from a central directory, not from your
+personal directory.
+You should only upload your program files to Vocareum, that is
+<code>nbclassify.py</code> and <code>nblearn.py</code> (plus any
+required auxiliary files, such as code shared between the programs or
+a word list <i>that you wrote yourself</i>).
+
+</p><p>You are encouraged to <strong>submit early and
+often</strong> in order to iron out any problems, especially issues
+with the format of the final output.
+
+</p><p><span style="color:red">The performance of you classifier will be
+measured automatically; failure to format your output correctly may
+result in very low scores, which will not be changed.</span>
+
+</p><p>For full credit, make sure to submit your assignment well before
+the deadline. The time of submission recorded by the system is the
+time used for determining late penalties. If your submission is
+received late, whatever the reason (including equipment failure and
+network latencies or outages), it will incur a late penalty.
+
+</p><p>If you have any issues with Vocareum with regards to logging in,
+submission, code not executing properly, etc., please make a post on
+Piazza so the instructional team can look into the issue.
+
+</p><h2>Grading</h2>
+
+<p>After the due date, we will train your model on the full training
+data (including development data), run your classifier on unseen test
+data,
+and compute the F1 score of your output compared to a reference
+annotation for each of the four classes (truthful, deceptive,
+positive, and negative).
+Your grade will be based on the performance of your classifier. We
+will calculate the mean of the four F1 scores and scale it to the
+performance of a naive Bayes classifier
+developed by the instructional staff
+(so if that classifier has F1=0.8, then a score of 0.8 will receive a
+full credit, and a score of 0.72 will receive 90%&nbsp;credit).
+
+</p><p>Note that the measure for grading is the <i>macro-average</i> over
+classes; macro- and micro-averaging are explained in
+<a href="http://nlp.stanford.edu/IR-book/pdf/13bayes.pdf">Manning,
+Raghavan and Schutze, Introduction to information retrieval,
+Chapter 13: Text classification and Naive Bayes</a>.
+For more information on F1, see
+<a href="https://nlp.stanford.edu/IR-book/pdf/08eval.pdf">Manning,
+Raghavan and Schutze, Introduction to information retrieval,
+Chapter 8: Evaluation in information retrieval</a>.
+
+</p><h2>Notes</h2>
+
+<ul>
+  <li><strong>Development data.</strong> While developing your
+  programs, you should reserve some of the data as development data in
+  order to test the performance of your programs. The submission
+  script on Vocareum will use folds 2, 3, and&nbsp;4 as training data, and
+  fold&nbsp;1 as development data: that is, it will run
+  <code>nblearn.py</code> on a directory containing only folds 2, 3,
+  and&nbsp;4, and it will run <code>nbclassify.py</code> on a directory
+  with a modified version of fold&nbsp;1, where directory and file names
+  are masked. While developing on your own you may use
+  different splits of the data (but to get the same results
+  as the submission script, you'll need to use the same split).
+  The grading script will use all 4
+  folds for training, and unseen data for testing.
+  </li><li><strong>Problem formulation.</strong> You may treat the problem
+  as two binary classification problems (truthful/deceptive and
+  positive/negative), or as a 4-class single classification
+  problem. Choose whichever works better.
+  </li><li><strong>Smoothing and unknown tokens.</strong> You should
+  implement some method of smoothing for the training data and a way
+  to handle unknown vocabulary in the test data, otherwise your
+  programs won’t work. For example, you can use add-one
+  smoothing on the training data, and simply ignore unknown
+  tokens in the test data. You may use more sophisticated methods
+  which you implement yourselves.
+  </li><li><strong>Tokenization.</strong> You’d need to develop some
+  reasonable method of identifying tokens in the text (since these are
+  the features for the naive Bayes classifier). Some common options
+  are removing certain punctuation, or lowercasing all the letters.
+  You may also find it useful to ignore certain high-frequency or
+  low-frequency tokens. You may use any tokenization method which you
+  implement yourselves. Experiment, and choose whichever works best.
+</li></ul>
+  
+<h2>Collaboration and external resources</h2>
+
+<ul>
+  <li>This is an individual assignment. You may not work in teams or
+  collaborate with other students. You must be the sole author of 100%
+  of the code you turn in.
+  </li><li>You may not look for solutions on the web, or use code you find
+  online or anywhere else.
+  </li><li>You may not download the data from any source other than the
+  files provided on Blackboard, and you may not attempt to locate the
+  test data on the web or anywhere else.
+  </li><li>You may use packages in the Python Standard Library, as well as
+  numpy. You may not use any other packages.
+  </li><li>You may use external resources to learn basic functions of
+  Python (such as reading and writing files, handling text strings, and
+  basic math), but the extraction and computation of model parameters,
+  as well as the use of these parameters for classification, must be
+  your own work.
+  </li><li>Failure to follow the above rules is considered a violation of
+  <a href="http://ron.artstein.org/csci544-2020-08/integrity.html">academic integrity</a>,
+  and is grounds for failure of the assignment, or
+  in serious cases failure of the course.
+  </li><li>We use plagiarism detection software to identify
+  similarities between student assignments, and between student
+  assignments and known solutions on the web.
+  <strong>Any attempt to fool plagiarism detection, for
+  example the modification of code to reduce its similarity to the
+  source, will result in an automatic failing grade for the
+  course.</strong>
+  </li><li>Please discuss any issues you have on the Piazza discussion
+  boards. Do not ask questions about the assignment by email; if we
+  receive questions by email where the response could be helpful for
+  the class, we will ask you to repost the question on the discussion
+  boards.
+</li></ul>
+
+
+
+</body></html>

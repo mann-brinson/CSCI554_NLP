@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0053)http://ron.artstein.org/csci544-2020-08/coding-2.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<link rel="stylesheet" type="text/css" href="./CSCI 544_ Coding Exercise 2_files/csci544.css">
+<title>CSCI 544: Coding Exercise 2</title>
+</head>
+
+<body style="">
+
+<div style="background-color:#900 ; text-align: right ; margin:0px">
+  <a href="http://www.usc.edu/">
+  <img style="padding:11px" src="./CSCI 544_ Coding Exercise 2_files/usc-shield-name-white.png" alt="University of Southern California"></a>
+</div>
+
+<h1>CSCI 544&nbsp;— Applied Natural Language Processing</h1>
+
+<hr>
+<h2>Coding Exercise 2</h2>
+<h2>Due: Monday, September&nbsp;14, at 23:59 Pacific Time (11:59 PM)</h2>
+<p>This assignment counts for 5% of the course grade.
+</p><p>Assignments turned in after the deadline but before Thursday,
+September&nbsp;17 are subject to a 20% grade penalty.
+
+</p><hr>
+
+<h2>Overview</h2>
+
+<p>In this assignment you will write a very simple lemmatizer, which
+learns a lemmatization function from an annotated corpus. The function
+is so basic I wouldn’t even consider it machine learning: it’s
+basically just a big lookup table, which maps every word form attested
+in the training data to the most common lemma associated with that
+form. At test time, the program checks if a form is in the lookup
+table, and if so, it gives the associated lemma; if the form is not in
+the lookup table, it gives the form itself as the lemma (identity
+mapping).
+
+</p><p>The program performs training and testing in one run: it reads the
+training data, learns the lookup table and keeps it in memory, then
+reads the test data, runs the testing, and reports the results. The
+program output is in a fixed format, reporting 15&nbsp;counters and
+5&nbsp;performance measures. The assignment will be graded based on
+the correctness of these measures.
+
+</p><h2>Data</h2>
+
+<p>A set of training and test data is available as a
+compressed ZIP archive on <a href="http://blackboard.usc.edu/">Blackboard</a>.
+The uncompressed archive contains the following files:
+</p><ul>
+  <li>Three corpus files in universal dependencies format, with the
+  file names indicating whether the file is for development, training,
+  or testing (only the training and testing files will be used in the exercise).
+  </li><li>Additional readme and license files, which will not be used for
+  the exercise.
+</li></ul>
+
+<p>The submission script will learn the model from the training data,
+test it on the test data, output the results, and compare them to the
+known solution. The grading script will do the same, but on training
+and test data from a different language.
+
+</p><h2>Program</h2>
+
+<p>You will write a program called <code>lookup-lemmatizer.py</code>
+in <strong>Python&nbsp;3</strong> (Python&nbsp;2 has been deprecated),
+which will take the paths to the training and test data files as
+command-line arguments.
+Your program will be invoked in the following way:
+
+</p><p><code>&gt; python lookup-lemmatizer.py /path/to/train/data /path/to/test/data</code>
+
+</p><p>The program will read the training data, learn a lookup table, run
+the lemmatizer on the test data, and write its report to a file called
+<code>lookup-output.txt</code>. The report has a fixed format of
+22&nbsp;lines which looks as follows:
+
+</p><blockquote>
+<p><code>
+Training statistics
+<br>Wordform types: 16879
+<br>Wordform tokens: 281057
+<br>Unambiguous types: 16465
+<br>Unambiguous tokens: 196204
+<br>Ambiguous types: 414
+<br>Ambiguous tokens: 84853
+<br>Ambiguous most common tokens: 75667
+<br>Identity tokens: 201485
+<br>Expected lookup accuracy: 0.967316238343
+<br>Expected identity accuracy: 0.716883052192
+<br>Test results
+<br>Total test items: 35430
+<br>Found in lookup table: 33849
+<br>Lookup match: 32596
+<br>Lookup mismatch: 1253
+<br>Not found in lookup table: 1581
+<br>Identity match: 1227
+<br>Identity mismatch: 354
+<br>Lookup accuracy: 0.962982658276
+<br>Identity accuracy: 0.776091081594
+<br>Overall accuracy: 0.954642957945
+</code>
+</p></blockquote>
+
+<p>The numbers above are a correct output when running the program
+on the supplied data (the submission script). There is some
+variability possible in the output; see <a href="http://ron.artstein.org/csci544-2020-08/coding-2.html#note">note</a>
+below.
+The numbers will be different when the program is run on the data used
+by the grading script.
+
+</p><p>Starter code is available on <a href="http://blackboard.usc.edu/">Blackboard</a>,
+which already reads the input and formats the output correctly. You
+are strongly encouraged to use this starter code; you will need to
+write the code that performs the counts and calculates the
+results correctly.
+
+</p><h2>Submission</h2>
+
+<p>All submissions will be completed through
+<a href="https://labs.vocareum.com/main/main.php">Vocareum</a>;
+please consult the <a href="http://ron.artstein.org/csci544-2020-08/Student-Help-Vocareum.pdf">instructions
+for how to use Vocareum</a>.
+
+</p><p>Multiple submissions are allowed; only the final submission will be
+graded. Each time you submit, a submission script is invoked, which
+runs the program on the training and test data.
+Do not include the data in your submission: the submission script
+reads the data from a central directory, not from your
+personal directory.
+You should only upload your program file to Vocareum, that is
+<code>lookup-lemmatizer.py</code>;
+if your program uses auxiliary files then you must also include these
+in your personal directory, though for this exercise there is probably
+no need for auxiliary files.
+
+</p><p>You are encouraged to <strong>submit early and
+often</strong> in order to iron out any problems, especially issues
+with the format of the final output.
+
+</p><p><span style="color:red">The output of your lemmatizer will be
+graded automatically; failure to format your output correctly may
+result in very low scores, which will not be changed.</span>
+
+</p><p>For full credit, make sure to submit your assignment well before
+the deadline. The time of submission recorded by the system is the
+time used for determining late penalties. If your submission is
+received late, whatever the reason (including equipment failure and
+network latencies or outages), it will incur a late penalty.
+
+<!--
+<p>If you have any issues with Vocareum with regards to logging in,
+submission, code not executing properly, etc., please contact
+<a href="http://broken-link/">the TAs</a>.
+-->
+
+</p><h2>Grading</h2>
+
+<p>After the due date, we will run your lemmatizer on training and
+test data from a different language, and compare the output of your
+program to a reference output for that language. Each of the
+20&nbsp;numbers calculated will count for 5% of the grade for the
+assignment.
+
+</p><h2><a name="note">Note</a></h2>
+
+<p><strong>Ties in the training data.</strong> The problem
+definition does not state what to do in case of ties in the training
+data, that is when for an ambiguous word form, there are two or more
+most common lemmas. In this case, either of the lemmas could enter
+the lookup table, which could cause a small amount of variation in
+the test data. This is expected, and the grading script will allow
+for this variation; for the supplied data (the submission script),
+the following is legitimate (correct) variation:
+</p><ul>
+  <li>Lookup match: 32589 to 32640
+  </li><li>Lookup mismatch: 1209 to 1260
+  </li><li>Lookup accuracy: 0.962775857485 to 0.964282548967
+  </li><li>Overall accuracy: 0.954445385267 to 0.955884843353
+</li></ul>
+
+<h2>Collaboration and external resources</h2>
+
+<ul>
+  <li>This is an individual assignment. You may not work in teams or
+  collaborate with other students. You must be the sole author of 100%
+  of the code you turn in.
+  </li><li>You may not look for solutions on the web, or use code you find
+  online or anywhere else.
+  </li><li>You may not download the data from any source other than the
+  files provided on Blackboard, and you may not attempt to locate the
+  test data on the web or anywhere else.
+  </li><li>You may use packages in the Python Standard Library. You may not
+  use any other packages.
+  </li><li>You may use external resources to learn basic functions of
+  Python (such as reading and writing files, handling text strings, and
+  basic math), but the extraction and computation of model parameters,
+  as well as the use of these parameters for lemmatization, must be
+  your own work.
+  </li><li>Failure to follow the above rules is considered a violation of
+  <a href="http://ron.artstein.org/csci544-2020-08/integrity.html">academic integrity</a>,
+  and is grounds for failure of the assignment, or
+  in serious cases failure of the course.
+  </li><li>We use plagiarism detection software to identify
+  similarities between student assignments, and between student
+  assignments and known solutions on the web.
+  <strong>Any attempt to fool plagiarism detection, for
+  example the modification of code to reduce its similarity to the
+  source, will result in an automatic failing grade for the
+  course.</strong>
+  </li><li>Please discuss any issues you have on the Piazza discussion
+  boards. Do not ask questions about the assignment by email; if we
+  receive questions by email where the response could be helpful for
+  the class, we will ask you to repost the question on the discussion
+  boards.
+</li></ul>
+
+
+
+</body></html>
